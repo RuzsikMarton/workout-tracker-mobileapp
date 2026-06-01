@@ -1,5 +1,42 @@
+import { AuthProvider } from "@/context/authContext";
+import "@/global.css";
+import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
+import { useEffect } from "react";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  return <Stack />;
+  const [loaded, error] = useFonts({
+    "SpaceMono-Regular": require("../../assets/fonts/SpaceMono-Regular.ttf"),
+    "SpaceMono-Bold": require("../../assets/fonts/SpaceMono-Bold.ttf"),
+    "SpaceMono-Italic": require("../../assets/fonts/SpaceMono-Italic.ttf"),
+    "SpaceMono-BoldItalic": require("../../assets/fonts/SpaceMono-BoldItalic.ttf"),
+  });
+
+  useEffect(() => {
+    if (error) throw error;
+  }, [error]);
+
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
+
+  if (!loaded) {
+    return null;
+  }
+  return (
+    <AuthProvider>
+      <ExpoStatusBar style="light" />
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="sign-in" options={{ headerShown: false }} />
+        <Stack.Screen name="sign-up" options={{ headerShown: false }} />
+      </Stack>
+    </AuthProvider>
+  );
 }
