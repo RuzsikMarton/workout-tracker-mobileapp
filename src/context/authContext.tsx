@@ -23,13 +23,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (isPending) return;
 
     const isAuthScreen = segments[0] === "sign-in" || segments[0] === "sign-up";
+    const inTabs = segments[0] === "(tabs)";
 
     if (!session && !isAuthScreen) {
       // Not signed in, redirect to sign-in
       router.replace("/sign-in");
-    } else if (session && isAuthScreen) {
-      // Signed in but on auth screen, redirect to home
-      router.replace("/");
+    } else if (session && (isAuthScreen || !inTabs)) {
+      // Signed in but not in tabs, redirect to tabs
+      router.replace("/(tabs)/home");
     }
   }, [session, isPending, segments]);
 
@@ -45,6 +46,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         <ActivityIndicator size="large" color="#fff" />
       </View>
     );
+  }
+
+  // Wait for error state to settle before rendering children
+  if (error) {
+    console.error("Auth error:", error);
   }
 
   return (
