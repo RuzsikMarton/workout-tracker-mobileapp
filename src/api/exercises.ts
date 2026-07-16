@@ -20,7 +20,7 @@ export const getExercises = async ({
     params.append("equipment", equipment);
   }
 
-  console.log("Final query parameters:", params.toString());
+  //console.log("Final query parameters:", params.toString());
 
   const url = `http://workoutracker.martonruzsik.sk/api/exercises?${params.toString()}`;
   const options = {
@@ -41,4 +41,25 @@ export const getExercises = async ({
   return data.data;
 };
 
-export const getExerciseById = async (id: string) => {};
+export const getExerciseById = async (id: string) => {
+  const cookies = authClient.getCookie();
+  const headers = {
+    Cookie: cookies,
+  };
+
+  const url = `http://workoutracker.martonruzsik.sk/api/exercises/${id}`;
+  const options = {
+    method: "GET",
+    headers,
+    credentials: "omit" as RequestCredentials,
+  };
+
+  const res = await fetch(url, options);
+  if (!res.ok) {
+    throw new Error(
+      `Failed to fetch exercise by id: ${res.status} ${res.statusText}`,
+    );
+  }
+  const data = await res.json();
+  return data;
+};

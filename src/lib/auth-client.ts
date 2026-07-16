@@ -3,7 +3,8 @@ import { createAuthClient } from "better-auth/react";
 import * as SecureStore from "expo-secure-store";
 
 export const authClient = createAuthClient({
-  baseURL: "https://workoutracker.martonruzsik.sk", // Base URL of Better Auth.
+  baseURL:
+    process.env.EXPO_PUBLIC_API_URL || "https://workoutracker.martonruzsik.sk", // Base URL of Better Auth.
   fetchOptions: {
     credentials: "include",
   },

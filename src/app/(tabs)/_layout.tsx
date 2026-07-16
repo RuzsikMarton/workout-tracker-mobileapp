@@ -7,6 +7,7 @@ function TabBarIcon(props: {
 }) {
   return <Ionicons size={28} style={{ marginBottom: -3 }} {...props} />;
 }
+
 export default function TabLayout() {
   return (
     <Tabs
