@@ -7,3 +7,14 @@ export type Exercise = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type ExerciseSet = {
+  completed: boolean;
+  createdAt: string;
+  id: string;
+  reps: number;
+  setNumber: number;
+  updatedAt: string;
+  weight: number;
+  workoutExerciseId: string;
+};

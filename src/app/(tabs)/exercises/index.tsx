@@ -54,7 +54,7 @@ export default function Exercises() {
   }
 
   return (
-    <View className="flex-1 bg-secondary py-16">
+    <View className="flex-1 bg-secondary pt-16">
       <Text className="text-3xl font-bold m-4 text-white">Exercises</Text>
       <View className="flex-row justify-between w-screen p-2 gap-2">
         <TouchableOpacity
@@ -99,13 +99,25 @@ export default function Exercises() {
           <Text className="text-white text-center font-semibold">X</Text>
         </TouchableOpacity>
       </View>
+      <View className="w-full border-t border-white/50"></View>
       {isFetching && !isLoading && <ActivityIndicator className="mb-2" />}
-      <FlatList
-        data={exercises}
-        renderItem={({ item }) => <ExerciseCard exercise={item} />}
-        keyExtractor={(item) => item.id}
-      />
-
+      {exercises.length === 0 ? (
+        <View className="flex-1 justify-center items-center bg-secondary">
+          <Text
+            className="text-white/75 text-center text-lg"
+            lineBreakMode="tail"
+            numberOfLines={2}
+          >
+            No exercises found. Please try adjusting your filters.
+          </Text>
+        </View>
+      ) : (
+        <FlatList
+          data={exercises}
+          renderItem={({ item }) => <ExerciseCard exercise={item} />}
+          keyExtractor={(item) => item.id}
+        />
+      )}
       <BottomSheet
         ref={muscleSheet}
         index={-1}
