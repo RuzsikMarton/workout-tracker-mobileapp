@@ -20,8 +20,6 @@ export const getExercises = async ({
     params.append("equipment", equipment);
   }
 
-  //console.log("Final query parameters:", params.toString());
-
   const url = `http://workoutracker.martonruzsik.sk/api/exercises?${params.toString()}`;
   const options = {
     method: "GET",
@@ -37,7 +35,6 @@ export const getExercises = async ({
     );
   }
   const data = await res.json();
-  //console.log("Response data:", JSON.stringify(data.data, null, 2));
   return data.data;
 };
 
